@@ -143,7 +143,7 @@ async function generatePDF(row, header, noPendaftaran) {
   // QR
   doc.addImage(qrImg, "PNG", 160, 245, 35, 35);
   doc.setFontSize(8);
-  doc.text("Scan untuk verifikasi", 160, 244);
+  doc.text("Pendaftaran Sukses", 160, 244);
 
   // Footer PDF
   doc.setFontSize(9);
@@ -195,4 +195,5 @@ function toggleMenu() {
 
 </body>
 </html>
+
 
