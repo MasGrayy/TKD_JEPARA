@@ -1,4 +1,4 @@
-/* Reset */
+/* ========== RESET ========== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 
@@ -14,6 +14,7 @@ html, body { height: 100%; }
   --max-width: 1100px;
 }
 
+/* ========== BODY ========== */
 body {
   font-family: 'Poppins', system-ui, sans-serif;
   background: linear-gradient(160deg, var(--bg-1), #151515 60%, var(--bg-1));
@@ -22,46 +23,129 @@ body {
   padding: 18px;
 }
 
+
+/* ========== HEADER BARU ========== */
 header {
   width: 100%;
   max-width: var(--max-width);
-  margin: 8px auto;
-  padding: 14px 18px;
+  margin: 8px auto 20px;
+  padding: 16px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(180deg, rgba(10,10,10,0.9), rgba(8,8,8,0.8));
-  border-radius: 12px;
-  border: 1px solid rgba(212,160,23,0.06);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+
+  background: rgba(20, 20, 20, 0.65);
+  backdrop-filter: blur(14px);
+
+  border-radius: 16px;
+  border: 1px solid rgba(212,160,23,0.25);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+
+  position: sticky;
+  top: 10px;
+  z-index: 999;
 }
 
 .logo {
-  font-size: clamp(18px, 3.2vw, 30px);
-  font-weight: 800;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 900;
   color: var(--accent-2);
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 12px rgba(255,215,0,0.5);
 }
 
+/* NAVIGATION */
 nav ul {
   display: flex;
-  gap: 18px;
+  gap: 28px;
   list-style: none;
+  align-items: center;
 }
 
 nav a {
+  position: relative;
   color: var(--accent);
   text-decoration: none;
   font-weight: 700;
-  padding: 8px 12px;
+  padding: 8px 4px;
+  transition: 0.3s;
 }
 
 nav a:hover {
-  background: var(--glass);
   color: #fff;
 }
 
-main { max-width: var(--max-width); margin: 18px auto; }
+/* underline animasi */
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--accent-2);
+  border-radius: 6px;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(255,215,0,0.6);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+
+/* ========== HAMBURGER MENU ========== */
+.menu-toggle {
+  width: 36px;
+  height: 26px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: var(--accent-2);
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+
+/* ========== RESPONSIVE NAV ========== */
+@media (max-width: 720px) {
+
+  nav ul {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    flex-direction: column;
+
+    background: rgba(0,0,0,0.85);
+    padding: 20px;
+
+    border-radius: 14px;
+    width: 180px;
+    display: none;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+
+/* ========== SECTIONS ========== */
+main {
+  max-width: var(--max-width);
+  margin: 18px auto;
+}
 
 .section {
   background: var(--bg-2);
@@ -72,9 +156,20 @@ main { max-width: var(--max-width); margin: 18px auto; }
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
-.section h1, .section h2 { margin-bottom: 12px; }
-.section h1 { font-size: clamp(20px, 4.2vw, 42px); text-align:center; }
-.section h2 { font-size: clamp(18px, 3.2vw, 30px); color: var(--accent-2); }
+.section h1,
+.section h2 {
+  margin-bottom: 12px;
+}
+
+.section h1 {
+  font-size: clamp(20px, 4.2vw, 42px);
+  text-align: center;
+}
+
+.section h2 {
+  font-size: clamp(18px, 3.2vw, 30px);
+  color: var(--accent-2);
+}
 
 .banner-img {
   display: block;
@@ -82,6 +177,8 @@ main { max-width: var(--max-width); margin: 18px auto; }
   margin: 12px auto;
 }
 
+
+/* ========== FORM & BUTTON ========== */
 .button {
   display: inline-block;
   padding: 12px 20px;
@@ -100,6 +197,8 @@ main { max-width: var(--max-width); margin: 18px auto; }
   color: var(--muted);
 }
 
+
+/* ========== HASIL PENCARIAN ========== */
 .result-box {
   margin-top: 18px;
   padding: 16px;
@@ -109,6 +208,8 @@ main { max-width: var(--max-width); margin: 18px auto; }
   box-shadow: 0 12px 40px rgba(0,0,0,0.6);
 }
 
+
+/* ========== FOOTER ========== */
 footer {
   text-align: center;
   padding: 18px;
