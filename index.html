@@ -62,7 +62,7 @@ async function ambilDataSheet() {
   return text.split("\n").map(r => r.split("\t"));
 }
 
-async function generatePDF(row, header) {
+async function generatePDF(row, header, noPendaftaran) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
@@ -91,10 +91,23 @@ async function generatePDF(row, header) {
   doc.setFontSize(12);
   doc.setTextColor(0);
 
+  // Tambah Nomor Pendaftaran
+  doc.setFont(undefined, "bold");
+  doc.text("Nomor Pendaftaran", 20, y);
+  y += 7;
+  doc.setFont(undefined, "normal");
+  doc.text(noPendaftaran, 25, y);
+  y += 10;
+
+  // Pertanyaan → Jawaban
   for (let i = 0; i < header.length; i++) {
-    doc.text(`${header[i]}`, 20, y);
-    doc.text(`: ${row[i]}`, 65, y);
-    y += 9;
+    doc.setFont(undefined, "bold"); 
+    doc.text(header[i], 20, y);
+    y += 7;
+
+    doc.setFont(undefined, "normal"); 
+    doc.text(row[i], 25, y);
+    y += 10;
   }
 
   const qrSize = 35;
@@ -117,22 +130,26 @@ async function cariDataPdf() {
   const data = await ambilDataSheet();
   const header = data[0];
   const list = data.slice(1);
-  const match = list.find(r => r.join(" ").toLowerCase().includes(keyword));
 
-  if (!match) {
+  const index = list.findIndex(r => r.join(" ").toLowerCase().includes(keyword));
+  if (index === -1) {
     box.innerHTML = "<b>Data tidak ditemukan.</b>";
     return;
   }
 
+  const match = list[index];
+  const noPendaftaran = String(index + 1).padStart(3, "0");
+
   let html = "<h3>Data Ditemukan</h3>";
+  html += `<p><b>Nomor Pendaftaran:</b> ${noPendaftaran}</p>`;
   for (let i = 0; i < header.length; i++) {
     html += `<p><b>${header[i]}:</b> ${match[i]}</p>`;
   }
   box.innerHTML = html;
 
-  const pdf = await generatePDF(match, header);
+  const pdf = await generatePDF(match, header, noPendaftaran);
   const fileName = match[0].replace(/[^a-zA-Z0-9]/g, "_");
-  pdf.save(`Bukti_Pendaftaran_${fileName}.pdf`);
+  pdf.save(`Bukti_Pendaftaran_${noPendaftaran}_${fileName}.pdf`);
 }
 </script>
 
